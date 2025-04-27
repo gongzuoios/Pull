@@ -10,14 +10,14 @@ jobs:
         run: >
           docker pull --platform linux/amd64 nginx:latest
 
-          docker tag nginx:latest ${{ SSS.ALIYUN_REGISTRY }}/${{ SSS.ALIYUN_NAME_SPACE }}/nginx:x86-latest
+          docker tag nginx:latest ${{ secrets.ALIYUN_REGISTRY }}/${{ secrets.ALIYUN_NAME_SPACE }}/nginx:x86-latest
       - name: 登录阿里云ACR
         uses: docker/login-action@v2
         with:
-          registry: ${{ SSS.ALIYUN_REGISTRY }}
-          username: ${{ SSS.ALIYUN_REGISTRY_USER }}
-          password: ${{ SSS.ALIYUN_REGISTRY_PASSWORD }}
+          registry: ${{ secrets.ALIYUN_REGISTRY }}
+          username: ${{ secrets.ALIYUN_REGISTRY_USER }}
+          password: ${{ secrets.ALIYUN_REGISTRY_PASSWORD }}
       - name: 推送镜像到ACR
         run: >
-          docker push ${{ SSS.ALIYUN_REGISTRY }}/${{ SSS.ALIYUN_NAME_SPACE
+          docker push ${{ secrets.ALIYUN_REGISTRY }}/${{ secrets.ALIYUN_NAME_SPACE
           }}/nginx:x86-latest
