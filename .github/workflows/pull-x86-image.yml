@@ -1,5 +1,1 @@
----
-- name: 验证 Secrets 值
-  run: |
-    echo "Registry: ${{ secrets.ALIYUN_REGISTRY }}"  
-    echo "Namespace: ${{ secrets.ALIYUN_NAME_SPACE }}"  
+
