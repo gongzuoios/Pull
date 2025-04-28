@@ -1,4 +1,4 @@
-name: Pull and Push Apache Zeppelin 0.12.0 to Aliyun ACR
+name: Pull and  Push Apache Zeppelin 0.12.0 to Aliyun ACR
 
 on:
   push:
