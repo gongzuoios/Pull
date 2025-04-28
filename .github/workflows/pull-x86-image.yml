@@ -21,7 +21,7 @@ jobs:
         password: ${{ secrets.ALIYUN_PASSWORD }}
 
     - name: Pull Apache Zeppelin Image
-      run: docker pull apache/zeppelin
+      run: docker pull apache/zeppelin:0.12.0
 
     - name: Get Short Commit SHA
       id: commit_sha
