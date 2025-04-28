@@ -1,1 +1,34 @@
+name: Pull and Push Apache Zeppelin to Aliyun ACR
 
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  pull-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Login to Aliyun ACR
+      uses: docker/login-action@v2
+      with:
+        registry: ${{ secrets.ALIYUN_REGISTRY }}
+        username: ${{ secrets.ALIYUN_USERNAME }}
+        password: ${{ secrets.ALIYUN_PASSWORD }}
+
+    - name: Pull Apache Zeppelin Image
+      run: docker pull apache/zeppelin
+
+    - name: Tag Apache Zeppelin Image
+      run: |
+        docker tag apache/zeppelin ${{ secrets.ALIYUN_REGISTRY }}/${{ secrets.ALIYUN_NAMESPACE }}/zeppelin:latest
+        docker tag apache/zeppelin ${{ secrets.ALIYUN_REGISTRY }}/${{ secrets.ALIYUN_NAMESPACE }}/zeppelin:${{ github.sha }}
+
+    - name: Push Apache Zeppelin Image to Aliyun ACR
+      run: |
+        docker push ${{ secrets.ALIYUN_REGISTRY }}/${{ secrets.ALIYUN_NAMESPACE }}/zeppelin:latest
+        docker push ${{ secrets.ALIYUN_REGISTRY }}/${{ secrets.ALIYUN_NAMESPACE }}/zeppelin:${{ github.sha }}
