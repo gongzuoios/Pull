@@ -23,12 +23,16 @@ jobs:
     - name: Pull Apache Zeppelin Image
       run: docker pull apache/zeppelin
 
+    - name: Get Short Commit SHA
+      id: commit_sha
+      run: echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
     - name: Tag Apache Zeppelin Image
       run: |
         docker tag apache/zeppelin ${{ secrets.ALIYUN_REGISTRY }}/${{ secrets.ALIYUN_NAMESPACE }}/zeppelin:latest
-        docker tag apache/zeppelin ${{ secrets.ALIYUN_REGISTRY }}/${{ secrets.ALIYUN_NAMESPACE }}/zeppelin:${{ github.sha }}
+        docker tag apache/zeppelin ${{ secrets.ALIYUN_REGISTRY }}/${{ secrets.ALIYUN_NAMESPACE }}/zeppelin:${{ steps.commit_sha.outputs.SHORT_SHA }}
 
     - name: Push Apache Zeppelin Image to Aliyun ACR
       run: |
         docker push ${{ secrets.ALIYUN_REGISTRY }}/${{ secrets.ALIYUN_NAMESPACE }}/zeppelin:latest
-        docker push ${{ secrets.ALIYUN_REGISTRY }}/${{ secrets.ALIYUN_NAMESPACE }}/zeppelin:${{ github.sha }}
+        docker push ${{ secrets.ALIYUN_REGISTRY }}/${{ secrets.ALIYUN_NAMESPACE }}/zeppelin:${{ steps.commit_sha.outputs.SHORT_SHA }}
