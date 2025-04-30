@@ -21,11 +21,11 @@ jobs:
         password: ${{ secrets.ALIYUN_PASSWORD }}
 
     - name: Pull Apache tdsql Image 0.2
-      run: docker pull tceforqci/tdsql:0.2
+      run: docker pull ccr.ccs.tencentyun.com/tdsql/tdsql:latest
 
     - name: Tag Apache tdsql Image for Aliyun ACR
       run: |
-        docker tag tceforqci/tdsql:0.2 ${{ secrets.ALIYUN_REGISTRY }}/${{ secrets.ALIYUN_NAMESPACE }}/lanres:0.2
+        docker tag ccr.ccs.tencentyun.com/tdsql/tdsql:latest ${{ secrets.ALIYUN_REGISTRY }}/${{ secrets.ALIYUN_NAMESPACE }}/lanres:0.2
 
     - name: Push tdsql Image 0.2 to Aliyun ACR
       run: docker push ${{ secrets.ALIYUN_REGISTRY }}/${{ secrets.ALIYUN_NAMESPACE }}/lanres:0.2
