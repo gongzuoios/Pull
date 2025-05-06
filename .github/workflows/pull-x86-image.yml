@@ -21,11 +21,11 @@ jobs:
         password: ${{ secrets.ALIYUN_PASSWORD }}
 
     - name: Pull Apache jupyter Image 0.2
-      run: docker pull --platform=linux/arm64/v8 /base-notebook:notebook-7.0.6
+      run: docker pull --platform=linux/arm64 jupyter/base-notebook:notebook-7.0.6
 
     - name: Tag Apache tdsql Image for Aliyun ACR
       run: |
-        docker tag base-notebook:notebook-7.0.6 ${{ secrets.ALIYUN_REGISTRY }}/${{ secrets.ALIYUN_NAMESPACE }}/lanres:0.2
+        docker tag jupyter/base-notebook:notebook-7.0.6 ${{ secrets.ALIYUN_REGISTRY }}/${{ secrets.ALIYUN_NAMESPACE }}/lanres:0.2
 
     - name: Push jupyter Image 0.2 to Aliyun ACR
       run: docker push ${{ secrets.ALIYUN_REGISTRY }}/${{ secrets.ALIYUN_NAMESPACE }}/lanres:0.2
