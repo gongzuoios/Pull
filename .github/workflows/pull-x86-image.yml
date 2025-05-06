@@ -1,4 +1,4 @@
-name: Pull and  Push tdsql 0.2 to Aliyun ACR
+name: Pull and  Push c 0.2 to Aliyun ACR
 
 on:
   push:
@@ -20,12 +20,12 @@ jobs:
         username: ${{ secrets.ALIYUN_USERNAME }}
         password: ${{ secrets.ALIYUN_PASSWORD }}
 
-    - name: Pull Apache tdsql Image 0.2
-      run: docker pull ccr.ccs.tencentyun.com/tdsql/tdsql:latest
+    - name: Pull Apache jupyter Image 0.2
+      run: docker pull --platform=linux/arm64/v8 /base-notebook:notebook-7.0.6
 
     - name: Tag Apache tdsql Image for Aliyun ACR
       run: |
-        docker tag ccr.ccs.tencentyun.com/tdsql/tdsql:latest ${{ secrets.ALIYUN_REGISTRY }}/${{ secrets.ALIYUN_NAMESPACE }}/lanres:0.2
+        docker tag base-notebook:notebook-7.0.6 ${{ secrets.ALIYUN_REGISTRY }}/${{ secrets.ALIYUN_NAMESPACE }}/lanres:0.2
 
-    - name: Push tdsql Image 0.2 to Aliyun ACR
+    - name: Push jupyter Image 0.2 to Aliyun ACR
       run: docker push ${{ secrets.ALIYUN_REGISTRY }}/${{ secrets.ALIYUN_NAMESPACE }}/lanres:0.2
